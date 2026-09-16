@@ -1,0 +1,167 @@
+%% ============================================================
+%% TEMPLATE ARTIKEL ELSEVIER — UIN WALISONGO SEMARANG
+%% Format: elsarticle preprint (1 kolom, 12pt)
+%% Engine: pdflatex
+%% Konversi dari template-ieee v2.0 (IEEEtran journal 2 kolom)
+%% ============================================================
+%% CARA PAKAI:
+%%   1. Ganti semua placeholder <<...>> dengan konten Anda
+%%   2. Ganti cover_page.png dengan cover Anda
+%%   3. Rename referensi_template.bib jadi referensi.bib
+%%   4. Jalankan: make  (atau ./build.sh, atau .\build.ps1)
+%% ============================================================
+
+\documentclass[preprint,12pt]{elsarticle}
+
+% --- PACKAGE DASAR ---
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{amsmath,amssymb}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage[english,indonesian]{babel}
+\usepackage{ragged2e}
+\usepackage{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{csquotes}
+
+% NOTE konversi IEEE → Elsevier:
+% - \usepackage{cite} DIHAPUS (elsarticle pakai natbib/bawaan; cite konflik)
+% - \usepackage{stfloats} DIHAPUS (khusus 2-kolom IEEE, tidak dipakai preprint 1-kolom)
+% - \addto\captionsindonesian{\renewcommand{\abstractname}{Abstract}} DIHAPUS
+%   (Elsevier default label "Abstract")
+% - \markboth DIHAPUS (tidak dipakai elsarticle)
+% - \IEEEPARstart DIHAPUS jika ada (Elsevier tidak pakai drop cap)
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue
+}
+
+\begin{document}
+
+% ============================================================
+% COVER PAGE — FULL HALAMAN GAMBAR cover_page.png
+% Syarat gambar: resolusi minimal 2480x3508 px (300 dpi A4)
+% ============================================================
+% NOTE: pageanchor=false pada cover — class article me-reset page counter
+% ke 1 di awal DAN akhir environment titlepage, sehingga cover (p.1)
+% dan frontmatter (p.1) bentrok destinasi hyperref "page.1".
+% Tanpa toggle ini warning "duplicate page.1" tetap muncul walau
+% \setcounter{page}{1} manual sudah dihapus (redundan).
+\hypersetup{pageanchor=false}
+\begin{titlepage}
+    \newgeometry{left=0cm,right=0cm,top=0cm,bottom=0cm}
+    \thispagestyle{empty}
+    \noindent
+    \makebox[\linewidth][c]{%
+    \IfFileExists{cover_page.png}{%
+        \includegraphics[
+            width=\paperwidth,
+            height=\paperheight,
+            keepaspectratio=false
+        ]{cover_page.png}%
+    }{%
+        \color{red}\Huge\bfseries
+        ERROR: File cover\_page.png TIDAK DITEMUKAN!\\[0.5cm]
+        \Large Pastikan file ada di folder yang sama dengan file .tex ini.
+    }%
+    }
+    \restoregeometry
+\end{titlepage}
+\hypersetup{pageanchor=true}
+
+% ============================================================
+% FRONTMATTER — JUDUL + PENULIS + ABSTRAK + KEYWORDS
+% (pengganti \maketitle + \markboth ala IEEE)
+% NOTE: tanpa \setcounter{page}{1} manual (redundan — titlepage class
+% sudah me-reset ke 1). Cover tidak di-anchor (pageanchor=false di atas)
+% sehingga frontmatter = hlm. 1 tunggal tanpa duplikat "page.1".
+
+\begin{frontmatter}
+
+\title{
+<<JUDUL-PAPER-LENGKAP>>
+}
+
+%% Penulis (konversi dari \IEEEauthorblockN + \IEEEauthorblockA):
+%% Format Elsevier: \author + \address (satu afiliasi bersama).
+\author{
+<<AUTHOR-1>> (\texttt{<<NIM-1>>}), \\
+<<AUTHOR-2>> (\texttt{<<NIM-2>>}), \\
+<<AUTHOR-3>> (\texttt{<<NIM-3>>})
+}
+
+\address{
+<<PROGRAM-STUDI>>, \\
+<<FAKULTAS>>, \\
+<<UNIVERSITAS>>, <<KOTA>>, Indonesia
+}
+
+%% Dosen pengampu + keterangan tugas (tidak ada padanan frontmatter
+%% standar; disimpan sebagai catatan kaki judul via \tnotetext).
+\tnotetext[tn1]{Dosen Pengampu: <<NAMA-DOSEN-LENGKAP-GELAR>>. Disusun untuk memenuhi tugas mata kuliah <<NAMA-MATA-KULIAH>>.}
+
+% ============================================================
+% ABSTRAK (format sama seperti IEEE)
+% ============================================================
+\begin{abstract}
+<<ISI-ABSTRAK>>
+\end{abstract}
+
+% ============================================================
+% KATA KUNCI (IEEE: IEEEkeywords → Elsevier: keyword)
+% ============================================================
+\begin{keyword}
+<<KATA-KUNCI-1>>, <<KATA-KUNCI-2>>, <<KATA-KUNCI-3>>, <<KATA-KUNCI-4>>, <<KATA-KUNCI-5>>.
+\end{keyword}
+
+\end{frontmatter}
+
+% ============================================================
+% ISI PAPER
+% ============================================================
+% Contoh sitasi (agar bibtex tidak error pada template kosong).
+% Hapus paragraf ini bila sudah ada \cite di konten Anda.
+Contoh sitasi Elsevier: \cite{contoh_artikel_jurnal}.
+
+\section{<<SECTION-1-JUDUL>>}
+
+<<SECTION-1-KONTEN>>
+
+\section{<<SECTION-2-JUDUL>>}
+
+<<SECTION-2-KONTEN>>
+
+\section{<<SECTION-3-JUDUL>>}
+
+<<SECTION-3-KONTEN>>
+
+\section{<<SECTION-4-JUDUL>>}
+
+<<SECTION-4-KONTEN>>
+
+\section{<<SECTION-5-JUDUL>>}
+
+<<SECTION-5-KONTEN>>
+
+% ============================================================
+% UCAPAN TERIMA KASIH (opsional)
+% ============================================================
+\section*{Ucapan Terima Kasih}
+
+<<ISI-UCAPAN-TERIMA-KASIH>>
+
+% ============================================================
+% DAFTAR PUSTAKA
+% ============================================================
+\bibliographystyle{elsarticle-num}
+\bibliography{referensi_template}
+
+\end{document}

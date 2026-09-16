@@ -1,0 +1,161 @@
+%% ============================================================
+%% TEMPLATE ARTIKEL IEEE — UIN WALISONGO SEMARANG
+%% Format: IEEEtran journal (2 kolom)
+%% Engine: pdflatex
+%% ============================================================
+%% CARA PAKAI:
+%%   1. Ganti semua placeholder <<...>> dengan konten Anda
+%%   2. Ganti cover_page.png dengan cover Anda
+%%   3. Rename referensi_template.bib jadi referensi.bib
+%%   4. Jalankan: make  (atau ./build.sh)
+%% ============================================================
+
+\documentclass[journal]{IEEEtran}
+
+% --- PACKAGE DASAR ---
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{amsmath,amssymb}
+\usepackage{cite}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage[english,indonesian]{babel}
+\usepackage{ragged2e}
+\usepackage{stfloats}
+\usepackage{geometry}
+\usepackage{microtype}
+\usepackage{csquotes}
+
+% ============================================================
+% ABSTRAK TETAP "Abstract"
+% ============================================================
+\addto\captionsindonesian{\renewcommand{\abstractname}{Abstract}}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue
+}
+
+% ============================================================
+% HEADER SETIAP HALAMAN
+% ============================================================
+\markboth
+{<<NAMA-JURNAL-ATAU-KONTEKS>>}
+{<<JUDUL-PENDEK-PAPER>>}
+
+\begin{document}
+
+% ============================================================
+% COVER PAGE — FULL HALAMAN GAMBAR cover_page.png
+% Syarat gambar: resolusi minimal 2480x3508 px (300 dpi A4)
+% ============================================================
+\begin{titlepage}
+    \newgeometry{left=0cm,right=0cm,top=0cm,bottom=0cm}
+    \thispagestyle{empty}
+    \noindent
+    \makebox[\linewidth][c]{%
+    \IfFileExists{cover_page.png}{%
+        \includegraphics[
+            width=\paperwidth,
+            height=\paperheight,
+            keepaspectratio=false
+        ]{cover_page.png}%
+    }{%
+        \color{red}\Huge\bfseries
+        ERROR: File cover\_page.png TIDAK DITEMUKAN!\\[0.5cm]
+        \Large Pastikan file ada di folder yang sama dengan file .tex ini.
+    }%
+    }
+    \restoregeometry
+\end{titlepage}
+
+% ============================================================
+% HALAMAN 1 — JUDUL + PENULIS + ABSTRAK
+% ============================================================
+\setcounter{page}{1}
+
+\title{
+<<JUDUL-PAPER-LENGKAP>>
+}
+
+\author{
+\IEEEauthorblockN{
+<<AUTHOR-1>> (<<NIM-1>>), \\
+<<AUTHOR-2>> (<<NIM-2>>), \\
+<<AUTHOR-3>> (<<NIM-3>>) \\[0.15cm]
+}
+\IEEEauthorblockA{
+<<PROGRAM-STUDI>> \\
+<<FAKULTAS>> \\
+<<UNIVERSITAS>>, <<KOTA>>, Indonesia \\[0.15cm]
+}
+\IEEEauthorblockN{\textit{Dosen Pengampu:}}
+\IEEEauthorblockA{
+<<NAMA-DOSEN-LENGKAP-GELAR>> \\[0.1cm]
+}
+\IEEEauthorblockA{
+\footnotesize \textit{Disusun untuk memenuhi tugas mata kuliah <<NAMA-MATA-KULIAH>>.}
+}
+}
+
+\maketitle
+
+% ============================================================
+% ABSTRAK
+% ============================================================
+\begin{abstract}
+<<ISI-ABSTRAK>>
+\end{abstract}
+
+% ============================================================
+% KATA KUNCI / INDEX TERMS
+% ============================================================
+\begin{IEEEkeywords}
+<<KATA-KUNCI-1>>, <<KATA-KUNCI-2>>, <<KATA-KUNCI-3>>, <<KATA-KUNCI-4>>, <<KATA-KUNCI-5>>.
+\end{IEEEkeywords}
+
+% ============================================================
+% ISI PAPER
+% ============================================================
+% Contoh sitasi (agar bibtex tidak error pada template kosong).
+% Hapus paragraf ini bila sudah ada \cite di konten Anda.
+Contoh sitasi IEEE: \cite{contoh_artikel_jurnal}.
+
+\section{<<SECTION-1-JUDUL>>}
+
+<<SECTION-1-KONTEN>>
+
+\section{<<SECTION-2-JUDUL>>}
+
+<<SECTION-2-KONTEN>>
+
+\section{<<SECTION-3-JUDUL>>}
+
+<<SECTION-3-KONTEN>>
+
+\section{<<SECTION-4-JUDUL>>}
+
+<<SECTION-4-KONTEN>>
+
+\section{<<SECTION-5-JUDUL>>}
+
+<<SECTION-5-KONTEN>>
+
+% ============================================================
+% UCAPAN TERIMA KASIH (opsional)
+% ============================================================
+\section*{Ucapan Terima Kasih}
+
+<<ISI-UCAPAN-TERIMA-KASIH>>
+
+% ============================================================
+% DAFTAR PUSTAKA
+% ============================================================
+\bibliographystyle{IEEEtran}
+\bibliography{referensi_template}
+
+\end{document}

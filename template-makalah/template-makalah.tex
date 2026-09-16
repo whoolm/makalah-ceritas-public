@@ -1,0 +1,115 @@
+\documentclass[12pt,a4paper,twoside]{article}
+
+% === PACKAGES ===
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english,indonesian]{babel}
+\usepackage{times}
+\usepackage[twoside]{geometry}
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{xurl}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{ragged2e}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{fancyhdr}
+
+% === LAYOUT (mirror margin untuk jilid) ===
+\geometry{
+    twoside,
+    left=4cm,
+    right=3cm,
+    top=4cm,
+    bottom=3cm
+}
+\onehalfspacing
+\setlength{\parindent}{1.27cm}
+\setlength{\parskip}{0pt}
+\setcounter{tocdepth}{2}   % TOC sampai subsection (level 2)
+% \RaggedRight dihapus — makalah Indonesia standar pakai justified, bukan ragged-right
+
+% === HYPERLINK ===
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    citecolor=black,
+    urlcolor=blue
+}
+
+% === HEADING STYLE ===
+\titleformat{\section}{\centering\bfseries\large}{}{0pt}{}
+\titleformat{\subsection}{\bfseries\normalsize}{}{0pt}{}
+\titleformat{\subsubsection}{\bfseries\normalsize}{}{0pt}{}
+
+% === HEADER/FOOTER (diaktifkan setelah cover, lihat bawah) ===
+
+% === CUSTOM COMMANDS ===
+\newcommand{\arabicterm}[1]{\textit{#1}}
+
+\begin{document}
+
+% === COVER PAGE ===
+% \enlargethispage: image setinggi \paperheight (== \textheight) butuh
+% toleransi <1pt agar tidak tumpah ke hal. 2 (pembulatan internal pdfTeX)
+\thispagestyle{empty}
+\pagenumbering{gobble}
+\newgeometry{margin=0cm}
+\enlargethispage{5pt}%
+\noindent
+\IfFileExists{cover.png}{%
+    \includegraphics[width=\paperwidth,height=\paperheight,keepaspectratio=false]{cover.png}%
+}{%
+    \centering
+    \vspace*{5cm}
+    {\Huge\bfseries MAKALAH}\\[1cm]
+}%
+\restoregeometry
+\clearpage
+
+% === HALAMAN JUDUL ===
+\input{halaman-judul.tex}
+
+\pagenumbering{arabic}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[C]{\thepage}      % page number di footer tengah (cocok untuk jilid)
+\renewcommand{\headrulewidth}{0pt}
+\setcounter{page}{1}
+
+% === KATA PENGANTAR ===
+\clearpage
+\phantomsection
+\section*{KATA PENGANTAR}
+\addcontentsline{toc}{section}{KATA PENGANTAR}
+\input{kp.tex}
+
+% === DAFTAR ISI ===
+\clearpage
+\renewcommand{\contentsname}{DAFTAR ISI}
+\phantomsection
+\tableofcontents
+\addcontentsline{toc}{section}{DAFTAR ISI}
+
+% === ISI MAKALAH ===
+\clearpage
+\input{bab1.tex}
+
+\clearpage
+\input{bab2.tex}
+
+\clearpage
+\input{bab3.tex}
+
+% === DAFTAR PUSTAKA ===
+\clearpage
+\phantomsection
+\section*{DAFTAR PUSTAKA}
+\addcontentsline{toc}{section}{DAFTAR PUSTAKA}
+\input{pustaka.tex}
+
+\end{document}

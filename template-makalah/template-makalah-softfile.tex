@@ -1,0 +1,113 @@
+\documentclass[12pt,a4paper,oneside]{article}
+
+% === PACKAGES ===
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english,indonesian]{babel}
+\usepackage{times}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{xurl}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{ragged2e}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{fancyhdr}
+
+% === LAYOUT (simetris untuk soft file) ===
+\geometry{
+    left=3.5cm,
+    right=3.5cm,
+    top=4cm,
+    bottom=3cm
+}
+\onehalfspacing
+\setlength{\parindent}{1.27cm}
+\setlength{\parskip}{0pt}
+\setcounter{tocdepth}{2}   % TOC sampai subsection (level 2)
+% \RaggedRight dihapus — makalah Indonesia standar pakai justified, bukan ragged-right
+
+% === HYPERLINK ===
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    citecolor=black,
+    urlcolor=blue
+}
+
+% === HEADING STYLE ===
+\titleformat{\section}{\centering\bfseries\large}{}{0pt}{}
+\titleformat{\subsection}{\bfseries\normalsize}{}{0pt}{}
+\titleformat{\subsubsection}{\bfseries\normalsize}{}{0pt}{}
+
+% === HEADER/FOOTER (diaktifkan setelah cover, lihat bawah) ===
+
+% === CUSTOM COMMANDS ===
+\newcommand{\arabicterm}[1]{\textit{#1}}
+
+\begin{document}
+
+% === COVER PAGE ===
+% \enlargethispage: image setinggi \paperheight (== \textheight) butuh
+% toleransi <1pt agar tidak tumpah ke hal. 2 (pembulatan internal pdfTeX)
+\thispagestyle{empty}
+\pagenumbering{gobble}
+\newgeometry{margin=0cm}
+\enlargethispage{5pt}%
+\noindent
+\IfFileExists{cover.png}{%
+    \includegraphics[width=\paperwidth,height=\paperheight,keepaspectratio=false]{cover.png}%
+}{%
+    \centering
+    \vspace*{5cm}
+    {\Huge\bfseries MAKALAH}\\[1cm]
+}%
+\restoregeometry
+\newpage
+
+% === HALAMAN JUDUL ===
+\input{halaman-judul.tex}
+
+\pagenumbering{arabic}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[C]{\thepage}      % page number di footer tengah (cocok untuk jilid)
+\renewcommand{\headrulewidth}{0pt}
+\setcounter{page}{1}
+
+% === KATA PENGANTAR ===
+\phantomsection
+\section*{KATA PENGANTAR}
+\addcontentsline{toc}{section}{KATA PENGANTAR}
+\input{kp.tex}
+
+% === DAFTAR ISI ===
+\newpage
+\renewcommand{\contentsname}{DAFTAR ISI}
+\phantomsection
+\tableofcontents
+\addcontentsline{toc}{section}{DAFTAR ISI}
+
+% === ISI MAKALAH ===
+\newpage
+\input{bab1.tex}
+
+\newpage
+\input{bab2.tex}
+
+\newpage
+\input{bab3.tex}
+
+% === DAFTAR PUSTAKA ===
+\newpage
+\phantomsection
+\section*{DAFTAR PUSTAKA}
+\addcontentsline{toc}{section}{DAFTAR PUSTAKA}
+\input{pustaka.tex}
+
+\end{document}
