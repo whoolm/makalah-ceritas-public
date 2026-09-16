@@ -132,9 +132,146 @@ Baca: makalah-hadis/VERIFIKASI_DOI.md, makalah-hadis/bibliography_map.md.
 
 ---
 
-## 3. Prompt Drafting
+## 3. NotebookLM — Analisis & Konten Turunan
 
-### 3.1 Generate Bab I–III
+### 3.1 Gap Analysis
+
+- **Tool target:** NotebookLM.
+- **Trigger:** Setelah upload 20+ source, sebelum mulai menulis.
+
+```markdown
+Peran Anda: reviewer akademik senior untuk jurnal SINTA 1-2 bidang studi hadis.
+
+Tugas: analisis GAP RISET dari seluruh makalah yang saya upload.
+
+Langkah:
+1. Identifikasi TOPIK UTAMA yang dibahas di seluruh dokumen (agregasi).
+2. Klasifikasikan topik ke dalam 3 kategori:
+   - Topik yang sudah jenuh (banyak dibahas, kesimpulan konsisten)
+   - Topik yang masih diperdebatkan (ada kontradiksi antar-paper)
+   - Topik yang belum tergarap (minim literatur / sama sekali tidak ada)
+3. Untuk setiap topik di kategori 3, sebutkan:
+   - Kenapa ini gap (bukti dari dokumen)
+   - Rekomendasi metode/approach untuk mengisi gap
+   - Sitasi dari paper yang paling dekat (siapa yang belum membahas)
+4. Ranking gap berdasarkan: (a) urgensi teoretis, (b) kemudahan eksekusi,
+   (c) potensi kontribusi.
+
+Output format:
+| No | Gap | Bukti | Metode Rekomendasi | Prioritas |
+
+Batasan: HANYA berdasarkan dokumen yang saya upload.
+Kalau data kurang, tulis "TIDAK ADA DATA".
+```
+
+- **Output diharapkan:** Tabel gap ter-ranking + rekomendasi metode per gap.
+
+### 3.2 7 Opsi Judul
+
+- **Tool target:** NotebookLM.
+- **Trigger:** Setelah Gap Analysis (§3.1), sebelum drafting (§4.1).
+
+```markdown
+Peran Anda: ketua editor jurnal SINTA 1 studi Islam.
+
+Tugas: rumuskan 7 opsi JUDUL MAKALAH berdasarkan:
+1. Konten draft (baca Bab I–III)
+2. Tiga tema utama: periodisasi + penghimpunan + pemalsuan hadis
+3. Relevansi kontemporer (era digital)
+
+Kriteria judul yang baik:
+- Mencerminkan 3 tema inti
+- Menarik tapi tidak clickbait
+- Formal, akademik, tanpa "kita"/"kami"
+- Panjang 10-20 kata
+- Mengandung "hadis"
+- Sebaiknya ada sub-judul dengan titik dua (:)
+
+Untuk setiap opsi, sertakan:
+- Judul lengkap
+- Rasional (kenapa cocok dengan konten)
+- Kelebihan & kekurangan
+- Estimasi "daya jual" (untuk jurnal vs tugas kuliah)
+
+Output format:
+| No | Judul | Rasional | Kelebihan | Kekurangan | Cocok untuk |
+
+Setelah 7 opsi, berikan REKOMENDASI 1 judul terbaik.
+
+Batasan: HANYA berdasarkan isi draft + dokumen yang saya upload.
+```
+
+- **Output diharapkan:** 7 opsi judul + 1 rekomendasi terbaik.
+
+### 3.3 Podcast Script
+
+- **Tool target:** NotebookLM.
+- **Trigger:** Untuk memahami materi via audio.
+
+```markdown
+Buat naskah podcast 10 menit tentang makalah hadis ini.
+
+Format:
+- 2 pembicara (Host + Expert)
+- Struktur: intro (1 menit) + 3 segmen (3 menit x 3) + kesimpulan (1 menit)
+- Segmen 1: Periodisasi (5 era)
+- Segmen 2: Penghimpunan (hifz → tadwin)
+- Segmen 3: Pemalsuan + penyelamatan
+
+Gaya: percakapan natural, tidak kaku, tapi akurat
+Target: mahasiswa yang baru pertama kali baca makalah
+
+Output: script lengkap dengan dialog.
+```
+
+- **Output diharapkan:** Script dialog lengkap 10 menit.
+
+### 3.4 PPT Outline
+
+- **Tool target:** NotebookLM.
+- **Trigger:** Untuk presentasi kelas atau belajar mandiri.
+
+```markdown
+Buat outline PPT presentasi makalah hadis.
+
+Judul: "Dari Sahifah ke Basis Data: Periodisasi Kodifikasi Hadis,
+Penanggulangan Fabrikasi, dan Tantangan Otoritas di Era Digital"
+
+Target: mahasiswa + dosen Ulumul Hadis
+Durasi: 15 menit presentasi
+
+Struktur 20 slide:
+1. Title slide (judul + nama + institusi)
+2. Outline presentasi
+3. Latar belakang (3 poin)
+4. Rumusan masalah (3 pertanyaan)
+5-9. Periodisasi 5 era (1 slide/era)
+10-12. Penghimpunan (hifz → kitabah → tadwin)
+13-16. Pemalsuan (4 faktor + 2 upaya penyelamatan)
+17. Tantangan era digital
+18. Kesimpulan
+19. Saran
+20. Referensi utama
+
+Format tiap slide:
+- Judul slide (maks 8 kata)
+- 3-5 bullet (maks 15 kata/bullet)
+- Saran visual (1 kalimat)
+- Catatan presenter (2-3 kalimat)
+
+Aturan:
+- HANYA dari makalah
+- Setiap slide nyambung ke berikutnya
+- Output markdown siap convert PowerPoint
+```
+
+- **Output diharapkan:** Outline 20 slide markdown siap convert.
+
+---
+
+## 4. Prompt Drafting
+
+### 4.1 Generate Bab I–III
 
 - **Tool target:** Claude (penulis) + DeepSeek (sintesis operasional).
 - **Trigger:** Korpus terverifikasi (§2.2 lolos); mulai penulisan naskah baru.
@@ -154,7 +291,7 @@ Topik: <<TOPIK>>. Korpus: <<DAFTAR-DOI-TERVERIFIKASI>> (+ kitab primer manual bi
    BERHENTI — tunggu persetujuan skeleton sebelum menulis penuh.
 2. Setelah disetujui, tulis tiap bab sebagai file terpisah (BAB_I_*.md, BAB_II_A_*.md, ...).
    Setiap klaim faktual WAJIB menunjuk sumber korpus (format sementara: (Nama, Tahun) —
-   konversi footnote dikerjakan Fase Template, §5.1).
+   konversi footnote dikerjakan Fase Template, §6.1).
 3. Revisi ala Claude (checklist): hapus duplikasi; angka konsisten (abstrak ~230 kata,
    keywords 5–7 bila jalur IEEE); kunci sitasi unik (pelajaran: bengbeng → gumilanghudaefi);
    entri tanpa year/metadata tulis % TODO(editor), JANGAN dikarang.
@@ -165,7 +302,7 @@ Topik: <<TOPIK>>. Korpus: <<DAFTAR-DOI-TERVERIFIKASI>> (+ kitab primer manual bi
 - **Output diharapkan:** skeleton disetujui + file bab terpisah + daftar TODO eksplisit;
   0 klaim tanpa sumber.
 
-### 3.2 Parafrase Anti-Plagiarisme
+### 4.2 Parafrase Anti-Plagiarisme
 
 - **Tool target:** Claude (parafrase) + OpenCode (deteksi overlap).
 - **Trigger:** Draf mentah selesai; sebelum konversi ke `.tex`.
@@ -191,9 +328,9 @@ tulis output ke <<BAB>>_PARAFRASE.md (dan _POLISHED bila perlu tahap poles).
 
 ---
 
-## 4. Prompt Template Build
+## 5. Prompt Template Build
 
-### 4.1 Build Template IEEE
+### 5.1 Build Template IEEE
 
 - **Tool target:** OpenCode. **Trigger:** Paper baru jalur artikel jurnal.
 - **Acuan:** `template-ieee/README_TEMPLATE.md`, `template-ieee/template_ieee.tex`,
@@ -222,7 +359,7 @@ Buat paper baru <<NAMA-PAPER>> (kalau belum ada nama, tanya dulu):
 
 - **Output diharapkan:** `.tex`+`.bib` terisi, PDF terkompilasi 0 error, daftar sisa placeholder.
 
-### 4.2 Build Template Elsevier
+### 5.2 Build Template Elsevier
 
 - **Tool target:** OpenCode. **Trigger:** Butuh varian jurnal Elsevier (`elsarticle`).
 - **Acuan:** `PROMPTS.md` Prompt 8; hasil teruji: `template-elsevier/` (tag `elsevier-v1.1`).
@@ -250,7 +387,7 @@ Konversi template-ieee/ → template-elsevier/ (repo terpisah, TANPA .git lama):
 
 - **Output diharapkan:** repo `template-elsevier/` terkompilasi + tag; diff struktur vs IEEE.
 
-### 4.3 Build Template Makalah UIN
+### 5.3 Build Template Makalah UIN
 
 - **Tool target:** OpenCode. **Trigger:** Makalah kuliah standar kampus (tugas, jilid, softfile).
 - **Acuan:** `template-makalah/README_TEMPLATE.md`; hasil teruji: `template-makalah/`
@@ -269,7 +406,7 @@ Baca: CONTEXT.md, template-makalah/README_TEMPLATE.md.
    (enumerate hanging indent). File POLISHED TIDAK dimodifikasi.
 4. Heading: \section*/\subsection*/\subsubsection* (+ \addcontentsline untuk BAB);
    Arab/transliterasi \textit (atau \arabicterm); sitasi teks (Nama, Tahun) + footnote
-   skripsi-grade (§5.1); cover full-page + fallback judul teks.
+   skripsi-grade (§6.1); cover full-page + fallback judul teks.
 5. Compile: .\build.ps1 (pdflatex ×2 — cukup, tanpa BibTeX). Varian: build-jilid.ps1 /
    build-softfile.ps1 bila diminta.
 6. Target: 0 error; TOC terisi (pass ke-2); cover tampil. Laporkan status + sisa TODO.
@@ -280,9 +417,9 @@ Baca: CONTEXT.md, template-makalah/README_TEMPLATE.md.
 
 ---
 
-## 5. Prompt Footnote Skripsi-Grade
+## 6. Prompt Footnote Skripsi-Grade
 
-### 5.1 Konversi Footnote (Hybrid)
+### 6.1 Konversi Footnote (Hybrid)
 
 - **Tool target:** OpenCode (konversi) + manusia (VERIFIKASI_MANUAL).
 - **Trigger:** Draf `.md` berpenanda `(Nama, Tahun)` siap menjadi `.tex` jalur Makalah Kuliah.
@@ -317,9 +454,9 @@ template-makalah/bab1.tex (contoh format hybrid, 5 footnote pertama sebagai pola
 
 ---
 
-## 6. Prompt Formatting
+## 7. Prompt Formatting
 
-### 6.1 Fix Halaman Judul
+### 7.1 Fix Halaman Judul
 
 - **Tool target:** OpenCode. **Trigger:** Halaman judul ditolak/tabrakan/duplikasi.
 - **Fakta proyek:** `template-makalah/halaman-judul.tex` (+ riwayat `.bak6/.bak7/.bak9`,
@@ -341,7 +478,7 @@ target 0 error; (5) laporkan diff + status. JANGAN commit sebelum saya setuju.
 
 - **Output diharapkan:** halaman judul rapi + diff + status compile.
 
-### 6.2 Fix TTD Kata Pengantar
+### 7.2 Fix TTD Kata Pengantar
 
 - **Tool target:** OpenCode. **Trigger:** Blok tanda tangan kata pengantar salah posisi/format.
 - **Fakta proyek:** `template-makalah/kp.tex` (+ riwayat `.bak9/.bak10/.bak11` = bukti iterasi);
@@ -362,9 +499,9 @@ Aturan: (1) format: kota, tanggal di kanan; nama terang + NIM di bawah ruang TTD
 
 ---
 
-## 7. Prompt Finalisasi
+## 8. Prompt Finalisasi
 
-### 7.1 Commit + Tag + Push
+### 8.1 Commit + Tag + Push
 
 - **Tool target:** OpenCode (siapkan) + manusia (setujui) + git.
 - **Trigger:** PDF final terverifikasi; siap rilis.
@@ -393,9 +530,52 @@ Siapkan commit untuk: <<DAFTAR-FILE-ATAU-PERUBAHAN>>.
 
 ---
 
-## 8. Prompt Reusable untuk Makalah Baru
+## 9. Cover Image — ChatGPT
 
-### 8.1 Tulis Makalah Baru dari Nol (Universal)
+### 9.1 Generate Cover A4
+
+- **Tool target:** ChatGPT (GPT-4o with image generation).
+- **Trigger:** Setelah template makalah sudah jadi, butuh cover image.
+
+```markdown
+Generate a cover image for an academic paper about Hadith studies.
+
+CONCEPT:
+Visual narrative of journey from classical manuscripts to digital databases —
+14 centuries of hadith transmission evolution.
+
+VISUAL ELEMENTS (bottom to top):
+- Bottom third: aged Arabic manuscript with gold illumination (classical sahifah)
+- Middle third: geometric Islamic patterns transitioning to circuit-board traces
+- Top third: abstract data visualization / neural network glow
+
+STYLE:
+- Academic, formal, scholarly
+- Navy blue base (#1a2332), gold accents (#c9a961), cream highlights (#f5f0e6)
+- Professional publisher aesthetic
+
+COMPOSITION:
+- A4 portrait (1:1.414)
+- Resolution: 2480x3508 pixels (300 DPI print-ready)
+- Top 25% empty (overlay judul)
+- Bottom 20% empty (overlay penulis)
+- Center 55% visual
+
+DO NOT INCLUDE:
+- Any text or words
+- Human faces
+- Modern logos
+
+Output: single A4 portrait cover, print-ready.
+```
+
+- **Output diharapkan:** Cover A4 portrait print-ready (≥2480px, top 25% + bottom 20% kosong untuk overlay).
+
+---
+
+## 10. Prompt Reusable untuk Makalah Baru
+
+### 10.1 Tulis Makalah Baru dari Nol (Universal)
 
 - **Tool target:** OpenCode + seluruh AI riset (§2.1) + Claude (drafting).
 - **Trigger:** Topik makalah baru apa pun (generalisasi `WORKFLOW_RESEARCH_GENERIK.md`
@@ -413,14 +593,17 @@ Tahun: {{TAHUN-AWAL}}-{{TAHUN-AKHIR}} | Seed: {{SEED_PAPER}} | Kitab primer: {{S
 
 Fase 1 EKSTRAKSI (bila ada sumber chat): jalankan Prompt §1.1.
 Fase 2 RESEARCH: jalankan Prompt §2.1 (4 sub-tema) → §2.2 (verifikasi DOI).
+  Lanjut NotebookLM: §3.1 (gap analysis) → §3.2 (7 opsi judul).
   Checklist: 15 ref/sub-tema, 4 laporan LeapSpace, gauge Consensus, tabel Elicit,
-  graf sitasi, laporan deep research, 0 DOI mati.
-Fase 3 DRAFTING: jalankan Prompt §3.1 (skeleton → BERHENTI tunggu setuju → bab penuh)
-  → §3.2 (parafrase + overlap report).
-Fase 4 TEMPLATE: jalur IEEE → Prompt §4.1; jalur MAKALAH → Prompt §4.3 (+ §5.1 footnote).
+  graf sitasi, laporan deep research, 0 DOI mati, tabel gap, 1 judul terpilih.
+Fase 3 DRAFTING: jalankan Prompt §4.1 (skeleton → BERHENTI tunggu setuju → bab penuh)
+  → §4.2 (parafrase + overlap report).
+Fase 4 TEMPLATE: jalur IEEE → Prompt §5.1; jalur MAKALAH → Prompt §5.3 (+ §6.1 footnote).
+  Cover: §9.1 (ChatGPT) bila butuh cover image baru.
+  Konten turunan (opsional): §3.3 (podcast) + §3.4 (PPT outline).
   Kitab klasik tanpa DOI → sumber manual (shamela.ws/archive.org), TANDAI.
 Fase 5 FINALISASI: verifikasi (Prompt 4 PROMPTS.md: 0 error/undefined, abstrak "Abstract"
-  bila IEEE, table* , cover tampil) → optimasi bila > 3 MB (S1 saja) → Prompt §7.1.
+  bila IEEE, table* , cover tampil) → optimasi bila > 3 MB (S1 saja) → Prompt §8.1.
 Aturan global: TIDAK_TERSEDIA bila data tak ada; konflik dua versi; buku/kitab klasik
   TIDAK dipaksa ke Crossref; file POLISHED tidak dimodifikasi; JANGAN commit tanpa setuju.
 Laporkan per fase: deliverable + sisa TODO + status.
@@ -431,27 +614,32 @@ Laporkan per fase: deliverable + sisa TODO + status.
 
 ---
 
-## 9. Cheat Sheet
+## 11. Cheat Sheet
 
-### 9.1 Prompt → Tool Mapping
+### 11.1 Prompt → Tool Mapping
 
 | Prompt | Tool utama | Tool pendukung |
 |---|---|---|
 | §1.1 Ekstraksi chat | OpenCode + JSON API | grep (hitung level pesan) |
 | §2.1 Multi-tool query | Perplexity, LeapSpace, Consensus, Elicit, Scholar, Rabbit, Papers, Scite, SciSpace, Gemini | DeepSeek (orkestrasi) |
 | §2.2 Verifikasi DOI | OpenCode + Crossref API | SciSpace Citation Generator |
-| §3.1 Generate Bab | Claude + DeepSeek | OpenCode (verifikasi terprogram) |
-| §3.2 Parafrase | Claude | OpenCode (overlap) |
-| §4.1 Build IEEE | OpenCode + pdflatex/bibtex | `build.ps1` |
-| §4.2 Build Elsevier | OpenCode + pdflatex/bibtex | `build.ps1` |
-| §4.3 Build Makalah | OpenCode + pdflatex | `build*.ps1` |
-| §5.1 Footnote hybrid | OpenCode (+ manusia MANUAL) | `bibliography_map.json` |
-| §6.1 Halaman judul | OpenCode + pdflatex | `DECISIONS.md` K-02–K-04 |
-| §6.2 TTD KP | OpenCode + pdflatex | `KATA_PENGANTAR.md` |
-| §7.1 Commit+tag+push | OpenCode (siapkan) + git | manusia (setujui) |
-| §8.1 Universal | Semua di atas | checklist generik |
+| §3.1 Gap Analysis | NotebookLM | upload 20+ source |
+| §3.2 7 Opsi Judul | NotebookLM | draft Bab I–III |
+| §3.3 Podcast Script | NotebookLM | — |
+| §3.4 PPT Outline | NotebookLM | markdown → PowerPoint |
+| §4.1 Generate Bab | Claude + DeepSeek | OpenCode (verifikasi terprogram) |
+| §4.2 Parafrase | Claude | OpenCode (overlap) |
+| §5.1 Build IEEE | OpenCode + pdflatex/bibtex | `build.ps1` |
+| §5.2 Build Elsevier | OpenCode + pdflatex/bibtex | `build.ps1` |
+| §5.3 Build Makalah | OpenCode + pdflatex | `build*.ps1` |
+| §6.1 Footnote hybrid | OpenCode (+ manusia MANUAL) | `bibliography_map.json` |
+| §7.1 Halaman judul | OpenCode + pdflatex | `DECISIONS.md` K-02–K-04 |
+| §7.2 TTD KP | OpenCode + pdflatex | `KATA_PENGANTAR.md` |
+| §8.1 Commit+tag+push | OpenCode (siapkan) + git | manusia (setujui) |
+| §9.1 Cover A4 | ChatGPT (GPT-4o image) | — |
+| §10.1 Universal | Semua di atas | checklist generik |
 
-### 9.2 File → Template Mapping
+### 11.2 File → Template Mapping
 
 | File/keluaran | Template | Engine/pipeline |
 |---|---|---|
@@ -462,16 +650,16 @@ Laporkan per fase: deliverable + sisa TODO + status.
 | Draft mentah/poles/parafrase | `makalah-hadis/draft/` (`*.md`, `*_POLISHED`, `*_PARAFRASE`) | markdown (bukan LaTeX) |
 | Peta footnote | `makalah-hadis/bibliography_map.json` | JSON key→metadata |
 
-### 9.3 Fase → Deliverable Mapping
+### 11.3 Fase → Deliverable Mapping
 
 | Fase (`PRD_MASTER.md` §7) | Prompt katalog | Deliverable |
 |---|---|---|
 | F1 Ekstraksi | §1.1 | `raw/` + `extracted/` + `memory/` |
-| F2 Research | §2.1, §2.2 | Laporan + korpus terverifikasi + cache Crossref |
-| F3 Drafting | §3.1, §3.2 | Skeleton + Bab I–III + PARAFRASE + overlap report |
-| F4 Template | §4.1/§4.2/§4.3, §5.1, §6.1, §6.2 | `.tex` + `.bib`/footnote + cover; 0 error |
-| F5 Finalisasi | Prompt 4–5 `PROMPTS.md`, §7.1 | PDF ≤ 3 MB + commit/tag ter-push |
-| F6 Arsip & Rilis | §7.1 (langkah 4–5) | Tag rilis + `arsip/` + CHANGELOG |
+| F2 Research | §2.1, §2.2, §3.1–§3.2 | Laporan + korpus terverifikasi + cache Crossref + gap + judul |
+| F3 Drafting | §4.1, §4.2 | Skeleton + Bab I–III + PARAFRASE + overlap report |
+| F4 Template | §5.1/§5.2/§5.3, §6.1, §7.1, §7.2, §9.1 | `.tex` + `.bib`/footnote + cover; 0 error |
+| F5 Finalisasi | Prompt 4–5 `PROMPTS.md`, §8.1 | PDF ≤ 3 MB + commit/tag ter-push |
+| F6 Arsip & Rilis | §8.1 (langkah 4–5) | Tag rilis + `arsip/` + CHANGELOG |
 
 > Catatan: `PROMPTS.md` Prompt 1–9 tetap menjadi referensi operasional harian OpenCode
 > (paper baru, update existing, optimasi S1, verifikasi IEEE, troubleshooting compile,
