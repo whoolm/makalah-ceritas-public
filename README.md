@@ -21,6 +21,15 @@ Struktur hasil clone = struktur skill (`SKILL.md`, `assets/`, `references/`, `sc
 | `references/` | Aturan format + prompt library + troubleshooting |
 | `scripts/` | Build script makalah UIN (`build-*.ps1`) |
 | `PROMPT_CATALOG.md` | Katalog prompt AI proyek |
+| `docs/` | Dokumentasi publik — mulai dari `docs/index.md` |
+
+## Dokumentasi
+
+- **Kontributor baru:** mulai dari [`docs/index.md`](docs/index.md) (quick start).
+- **7 tier parafrase:** [`docs/parafrase-tiers.md`](docs/parafrase-tiers.md) (salinan publik + badge build + cara berkontribusi).
+- **Verifikasi:** [`docs/verifikasi.md`](docs/verifikasi.md) (cara pakai `verify-tier.ps1`, arti PASS/WARN/FAIL).
+- **Prompt master:** [`docs/prompt-master.md`](docs/prompt-master.md) (NotebookLM → OpenCode → Claude).
+- **Backlog:** [`TASK_BREAKDOWN.md`](TASK_BREAKDOWN.md) (21 task dari 7 tier).
 
 ---
 
