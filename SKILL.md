@@ -58,7 +58,7 @@ Kalau user tidak menyebut format, tanya dulu sebelum mulai.
 
 - Ganti SEMUA placeholder `<<...>>` format HYPHEN (`<<NIM-1>>`, bukan `<<NIM_1>>` — underscore = error `Missing $`).
 - Yang datanya belum ada tulis `TIDAK_TERSEDIA`, jangan dikarang.
-- Terapkan aturan format sejak awal — lihat `references/format-ieee.md`, `references/format-makalah-uin.md`, atau `references/format-elsevier.md` (TIDAK_TERSEDIA — akan dibuat saat dibutuhkan).
+- Terapkan aturan format sejak awal — lihat `references/format-ieee.md`, `references/format-makalah-uin.md`, atau `references/format-elsevier.md`.
 - Verifikasi DOI via Crossref untuk entri `.bib` baru; entri tanpa year = tandai `% TODO(editor)`.
 
 ### 6. Compile
@@ -89,7 +89,7 @@ Hapus `*.bak` sebelum commit; jangan commit artefak (`*.aux/.log/.bbl/.blg/.out/
 |---|---|
 | `references/format-ieee.md` | Aturan 2 kolom, sitasi numeric, abstrak & index terms, troubleshooting IEEE |
 | `references/format-makalah-uin.md` | Aturan 1 kolom, footnote skripsi-grade, halaman judul, TTD kata pengantar, troubleshooting |
-| `references/format-elsevier.md` | TIDAK_TERSEDIA (akan dibuat saat dibutuhkan) — aturan 1 kolom elsarticle, preprint style, sitasi numeric |
+| `references/format-elsevier.md` | Aturan 1 kolom elsarticle, preprint style, sitasi numeric |
 | `references/prompt-library.md` | Prompt siap pakai (paper baru, update, optimasi, verifikasi, troubleshooting, commit, audit) |
 | `references/workflow-full.md` | SOP end-to-end lengkap |
 | `references/troubleshooting.md` | Katalog error LaTeX umum + solusi |
