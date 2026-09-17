@@ -1,0 +1,86 @@
+name: verify-tier
+
+# Audit parafrase otomatis (PARAFRASE_TIERS §5.5).
+# FAIL = gagal. WARN = lolos (tetap dilaporkan).
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  verify:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Verify semua draft *_PARAFRASE.md
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Continue'
+          $files = Get-ChildItem -Recurse -Filter '*_PARAFRASE.md' |
+            Where-Object { $_.FullName -notmatch '\\\.git\\' }
+          if (-not $files) {
+            Write-Host 'Tidak ada file *_PARAFRASE.md — lewati (PASS).'
+            'status=PASS' | Out-File -FilePath $env:GITHUB_OUTPUT -Append -Encoding utf8
+            '[]' | Out-File -FilePath 'verify-results.json' -Encoding utf8
+            exit 0
+          }
+
+          $results = @()
+          $failCount = 0
+          foreach ($f in $files) {
+            # Deteksi tier: nama file ...TIER-Tn / ..._Tn.md / folder .../Tn/... ; default T1.
+            $tier = 'T1'
+            $m = [regex]::Match($f.Name, '(?i)[-_]?TIER[-_ ]?(T[1-7])')
+            if ($m.Success) { $tier = $m.Groups[1].Value.ToUpper() }
+            else {
+              $m2 = [regex]::Match($f.Name, '_(T[1-7])\.md$')
+              if ($m2.Success) { $tier = $m2.Groups[1].Value.ToUpper() }
+              else {
+                $m3 = [regex]::Match($f.FullName, '[\\/](T[1-7])[\\/]')
+                if ($m3.Success) { $tier = $m3.Groups[1].Value.ToUpper() }
+              }
+            }
+
+            Write-Host "=== $($f.FullName) (Tier $tier) ==="
+            $out = & .\scripts\verify-tier.ps1 -FilePath $f.FullName -Tier $tier 2>&1 |
+              Out-String
+            Write-Host $out
+            $status = 'UNKNOWN'
+            $sm = [regex]::Match($out, 'Status:\s*(PASS|WARN|FAIL)')
+            if ($sm.Success) { $status = $sm.Groups[1].Value }
+            if ($status -eq 'FAIL') { $failCount++ }
+            # verify-tier.ps1 saat ini hanya mengeluarkan PASS/WARN; UNKNOWN dihitung gagal.
+            if ($status -eq 'UNKNOWN') { $failCount++ }
+            $results += [pscustomobject]@{
+              file   = "$($f.FullName)"
+              tier   = $tier
+              status = $status
+            }
+          }
+
+          $results | ConvertTo-Json -Depth 3 |
+            Out-File -FilePath 'verify-results.json' -Encoding utf8
+          $summary = "files=$($results.Count) pass=$((@($results | Where-Object status -eq 'PASS')).Count) warn=$((@($results | Where-Object status -eq 'WARN')).Count) fail=$failCount"
+          Write-Host $summary
+          $summary | Out-File -FilePath 'verify-summary.txt' -Encoding utf8
+
+          if ($failCount -gt 0) {
+            Write-Host "FAIL: $failCount file berstatus FAIL/UNKNOWN." -ForegroundColor Red
+            exit 1
+          }
+          Write-Host 'OK: tidak ada FAIL (WARN tetap lolos).' -ForegroundColor Green
+
+      - name: Upload artifact hasil audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: verify-tier-results
+          path: |
+            verify-results.json
+            verify-summary.txt
+            C9_MIGRATION_LOG.md
+          if-no-files-found: warn
