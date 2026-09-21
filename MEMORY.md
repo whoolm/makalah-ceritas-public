@@ -173,3 +173,38 @@ User akan jalankan manual di notebooklm.google.com. 10 output:
 ### 🚨 SECURITY PENDING
 - Rotate 5 API keys: PostHog, Gemini #1, Gemini #2, Groq, Zen
 - Update .env.production + Railway + Vercel + redeploy
+
+---
+
+## Update 2026-09-21 (Latest)
+
+### Task Completed
+- ✅ Task 2: archive 2 file ekstra → submit/M4 clean (7 file)
+- ✅ Task 3: rotate 5 API keys
+- ✅ Task 4: Gemini key #3 live di Railway
+- ✅ Task 5: GROQ.md guide (gap fix)
+- ✅ Task 6: template routing by bidang (auto-detect)
+- ✅ Task 9: cover placeholder Moderasi + Hadis
+
+### New Templates
+- `log-mingguan` (Q&A mingguan untuk Fiqih)
+- `makalah` (7 bagian untuk Hadis/Moderasi)
+- `ieee` (2-kolom untuk PIH)
+- `elsevier` (slot eksakta)
+
+### Routing by Bidang
+- Eksakta → elsevier
+- Sosial → ieee
+- Keislaman → makalah
+- Log mingguan → log-mingguan
+- Lihat: docs/TEMPLATE-ROUTING.md
+
+### Fiqih Log-Mingguan
+- Status: SETUP (task 1)
+- Materi 1-1 siap generate
+- Path: D:\Ceritas-Batch\output\matkul-04\topik-01\
+
+### Besok (07:00 WIB)
+- Regen Moderasi (03)
+- Regen Ulumul Hadis (02)
+- Generate Fiqih materi 1-1
